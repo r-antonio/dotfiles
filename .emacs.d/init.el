@@ -21,8 +21,8 @@
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 (set-face-attribute 'default nil :font "Fira Code Retina" :height 125)
-(set-face-attribute 'fixed-pitch nil :font "Fira Code Retina" :height 260)
-(set-face-attribute 'variable-pitch nil :font "Cantarell" :height 295 :weight 'regular)
+(set-face-attribute 'fixed-pitch nil :font "Fira Code Retina" :height 125)
+(set-face-attribute 'variable-pitch nil :font "Cantarell" :height 125 :weight 'regular)
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -43,21 +43,6 @@
 
 (require 'use-package)
 (setq use-package-always-ensure t)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(global-command-log-mode t)
- '(ivy-mode t)
- '(package-selected-packages
-   '(visual-fill-column which-key rainbow-delimiters evil-magit magit counsel-projectile projectile hydra evil-collection evil general doom-themes helpful counsel ivy-rich doom-modeline ivy command-log-mode use-package)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 
 (use-package command-log-mode)
 
@@ -201,8 +186,6 @@
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
-(use-package evil-magit
-  :after magit)
 ;; NOTE: Make sure to configure a GitHub token before using this package!
 ;; - https://magit.vc/manual/forge/Token-Creation.html#Token-Creation
 ;; - https://magit.vc/manual/ghub/Getting-Started.html#Getting-Started
@@ -223,18 +206,19 @@
   (setq org-log-into-drawer t)
 
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)"))))
+        '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")))
 ;  (setq org-agenda-files
 ;	'("~/")))
 
-(set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
-(set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch))
-(set-face-attribute 'org-table nil :inherit '(shadow fixed-pitch))
-;(set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
-(set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
-(set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
-(set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-(set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-table nil :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'line-number nil :inherit 'fixed-pitch)
+  (set-face-attribute 'line-number-current-line nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch))
 
 (defun efs/org-mode-visual-fill ()
   (setq visual-fill-column-width 100
