@@ -191,6 +191,72 @@
 ;; - https://magit.vc/manual/ghub/Getting-Started.html#Getting-Started
 ;(use-package forge)
 
+(defun efs/lsp-mode-setup ()
+  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+  (lsp-headerline-breadcrumb-mode))
+
+(use-package lsp-mode
+  :commands (lsp lsp-deferred)
+  :hook (lsp-mode . efs/lsp-mode-setup)
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  :config
+  (lsp-enable-which-key-integration t))
+
+(use-package lsp-ui
+  :hook (lsp-mode . lsp-ui-mode))
+
+(use-package lsp-treemacs
+  :after lsp)
+
+(use-package lsp-ivy)
+
+(use-package company
+  :after lsp-mode
+  :hook (lsp-mode . company-mode)
+  :bind (:map company-active-map
+          ("<tab>" . company-complete-selection))
+        (:map lsp-mode-map
+          ("<tab>" . company-indent-or-complete-common))
+  :custom
+  (company-minimum-prefix-length 1)
+  (company-idle-delay 0.0))
+
+(use-package company-box
+  :hook (company-mode . company-box-mode))
+
+(use-package flycheck)
+(use-package yasnippet
+  :config
+  (yas-global-mode))
+(use-package lsp-java
+  :config
+  (add-hook 'java-mode-hook 'lsp))
+(use-package dap-mode
+  :after lsp-mode
+  :config
+  (dap-auto-configure-mode))
+(use-package dap-java
+  :ensure nil)
+(use-package helm-lsp)
+(use-package helm
+  :config
+  (helm-mode))
+
+;; (use-package lsp-java-boot
+;;   :config
+;;   (add-hook 'lsp-mode-hook #'lsp-lens-mode)
+;;   (add-hook 'java-mode-hook #'lsp-java-boot-lens-mode))
+
+(use-package typescript-mode
+  :mode "\\.ts\\'"
+  :hook (typescript-mode . lsp-deferred)
+  :config
+  (setq typescript-indent-level 2))
+
+(use-package evil-nerd-commenter
+  :bind ("M-/" . evilnc-comment-or-uncomment-lines))
+
 (defun efs/org-mode-setup ()
   (org-indent-mode)
   (variable-pitch-mode 1)
